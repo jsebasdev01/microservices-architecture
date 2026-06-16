@@ -49,31 +49,131 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProductResponse'
 
+  /products/{id}:
+
+    get:
+      tags:
+        - Product
+
+      operationId: getProductById
+
+      summary: Get product by id
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+          schema:
+            type: integer
+            format: int64
+
+      responses:
+        '200':
+          description: Success
+
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+
+        '404':
+          description: Product not found
+    put:
+      tags:
+        - Product
+
+      operationId: updateProduct
+
+      summary: Update product
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+          schema:
+            type: integer
+            format: int64
+
+      requestBody:
+        required: true
+
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+
+      responses:
+        '200':
+          description: Updated
+
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+
+        '404':
+          description: Product not found
+    delete:
+      tags:
+        - Product
+
+      operationId: deleteProduct
+
+      summary: Delete product
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+          schema:
+            type: integer
+            format: int64
+
+      responses:
+        '204':
+          description: Product deleted
+
+        '404':
+          description: Product not found
+
 components:
 
   schemas:
 
     ProductRequest:
-
       type: object
 
       required:
         - name
         - price
+        - stock
 
       properties:
 
         name:
           type: string
+          minLength: 3
+          maxLength: 100
+          example: "Laptop Lenovo"
 
         description:
           type: string
+          maxLength: 500
+          example: "Gaming laptop with RTX 4060"
 
         price:
           type: number
+          format: double
+          minimum: 0.01
+          example: 999.99
 
         stock:
           type: integer
+          minimum: 0
+          example: 10
 
     ProductResponse:
 

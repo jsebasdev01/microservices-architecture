@@ -35,4 +35,31 @@ public class ProductController implements ProductApi {
         return ResponseEntity.status(201)
                 .body(response);
     }
+
+    @Override
+    public ResponseEntity<ProductResponse> getProductById(Long id) {
+
+        return ResponseEntity.ok(
+                productService.getById(id)
+        );
+    }
+
+    @Override
+    public ResponseEntity<ProductResponse> updateProduct(Long id, ProductRequest productRequest) {
+
+        return ResponseEntity.ok(
+                productService.updateProduct(
+                        id,
+                        productRequest
+                )
+        );
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteProduct(Long id) {
+
+        productService.deleteProduct(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }
