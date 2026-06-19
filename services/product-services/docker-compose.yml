@@ -19,5 +19,10 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  product-service:
+    build: .
+    depends_on:
+      - postgres
+
 volumes:
   postgres_data:

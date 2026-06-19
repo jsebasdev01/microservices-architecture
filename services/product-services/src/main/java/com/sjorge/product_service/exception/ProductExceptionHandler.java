@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
+
 public class ProductExceptionHandler {
 
     @ExceptionHandler(ProductNotFoundException.class)
+
     public ResponseEntity<ErrorResponse> handleProductNotFound(
             ProductNotFoundException ex) {
 

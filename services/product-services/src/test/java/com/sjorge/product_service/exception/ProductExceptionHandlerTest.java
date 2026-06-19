@@ -19,7 +19,7 @@ public class ProductExceptionHandlerTest {
                 new ProductNotFoundException(1L);
 
         ResponseEntity<ErrorResponse> response =
-                handler.handler(ex);
+                handler.handleProductNotFound(ex);
 
         assertThat(response.getStatusCode())
                 .isEqualTo(HttpStatus.NOT_FOUND);
@@ -27,7 +27,13 @@ public class ProductExceptionHandlerTest {
         assertThat(response.getBody())
                 .isNotNull();
 
+        assertThat(response.getBody().code())
+                .isEqualTo("PRODUCT_NOT_FOUND");
+
         assertThat(response.getBody().message())
-                .contains("1");
+                .isEqualTo("Product not found: 1");
+
+        assertThat(response.getBody().timestamp())
+                .isNotNull();
     }
 }

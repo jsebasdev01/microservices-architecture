@@ -33,9 +33,10 @@ public class ProductService {
 
     public List<ProductResponse> getProducts() {
 
-        return mapper.toResponseList(
-                repository.findAll()
-        );
+        return repository.findAll()
+                .stream()
+                .map(mapper::toResponse)
+                .toList();
     }
 
     public ProductResponse getById(Long id) {

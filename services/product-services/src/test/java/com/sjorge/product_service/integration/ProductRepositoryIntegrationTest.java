@@ -89,4 +89,46 @@ class ProductRepositoryIntegrationTest {
         assertThat(found.get().getName())
                 .isEqualTo("Phone");
     }
+
+    @Test
+    void shouldDeleteProduct() {
+
+        Product product = new Product();
+
+        product.setName("Keyboard");
+        product.setPrice(BigDecimal.TEN);
+
+        Product saved = repository.save(product);
+
+        repository.deleteById(saved.getId());
+
+        assertThat(
+                repository.findById(saved.getId()))
+                .isEmpty();
+    }
+
+    @Test
+    void shouldFindAllProducts() {
+
+        Product p1 = new Product();
+        p1.setName("Laptop");
+        p1.setPrice(BigDecimal.valueOf(1000));
+
+        Product p2 = new Product();
+        p2.setName("Phone");
+        p2.setPrice(BigDecimal.valueOf(500));
+
+        repository.save(p1);
+        repository.save(p2);
+
+        assertThat(repository.findAll())
+                .hasSize(2);
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenNoProductsExist() {
+
+        assertThat(repository.findAll())
+                .isEmpty();
+    }
 }
